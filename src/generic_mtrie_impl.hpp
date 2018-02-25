@@ -167,7 +167,7 @@ void zmq::generic_mtrie_t<T>::rm (value_t *pipe_,
 
 template <typename T>
 template <typename Arg>
-void zmq::generic_mtrie_t<T>::rm_helper(value_t *pipe_,
+void zmq::generic_mtrie_t<T>::rm_helper (value_t *pipe_,
                                          unsigned char **buff_,
                                          size_t buffsize_,
                                          size_t maxbuffsize_,
@@ -307,15 +307,15 @@ bool zmq::generic_mtrie_t<T>::rm_helper (prefix_t prefix_,
                                          value_t *pipe_)
 {
     if (!size_) {
-        // TODO pipes can only be NULL here, if we are at the top level, i.e. 
-        // rm was already called with size_ == 0. This could be checked in rm, 
+        // TODO pipes can only be NULL here, if we are at the top level, i.e.
+        // rm was already called with size_ == 0. This could be checked in rm,
         // and here we could just have an assertion or naught
         if (pipes) {
             typename pipes_t::size_type erased = pipes->erase (pipe_);
-            // TODO this assertion prevents calling rm with a non-existent entry, but 
+            // TODO this assertion prevents calling rm with a non-existent entry, but
             // only if there is an entry with the same prefix but a different pipe;
             // this appears inconsistent, see also unittest_mtrie. It might be
-            // removed (since pipes is a set, in cannot be more than 1), and an 
+            // removed (since pipes is a set, in cannot be more than 1), and an
             // appropriate value must be returned.
             zmq_assert (erased == 1);
             if (pipes->empty ()) {
